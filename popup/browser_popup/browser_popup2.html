@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="browser_popup.css">
+
+    <script src="browser_popup2.js"></script>
+    <script src="../../content_scripts/browser_popup_script.js"></script>
+
+</script>
+  </head>
+
+<body style='background-color: rgb(233, 229, 223);'>
+    <div class="text-section-header" style='background-color:rgb(221, 197, 221)'>       Tabs  Orginizer       </div>
+
+    <div class='panel'>
+
+      <div>
+        <input type="checkbox" id="tab_dup1" checked="true">
+
+        <label for="tab_dup">Alert Tab Duplicates</label><br>
+
+        <!-- <a href='#' id='analysis' >Analyize Behavior</a> -->
+        <a href='#' id='switch_to_playing' style='text-decoration: none;color:black'; >&nbsp;&nbsp;&nbsp;Switch to playing tab</a>
+ 
+      </div>
+    
+     
+      <button id='remove_all_data' style="   color:black;border-radius: 50%;    opacity: 0.4;float:right   ">Clear All</button><br>
+   
+
+      <div id='focus options' >
+
+          <div style="position:inline">
+            <label for="sort_hashtages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Focus on hashtag:</label>
+            <select id='hashtags_select' style ='position: absolute; width:80px;     box-sizing:border-box;'  >
+              <option id="hashtag_nothing" selected>----</option> 
+            </select>
+          </div>
+
+          <div  style="position:inline;padding-top:10px">
+
+            <label for="sort_task" style='padding-right: 30px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Focus on task:</label>
+            <select id='task_select' style ='  position: absolute;  width:80px;      box-sizing:border-box; padding-right: 10px;
+            '>
+              <option id="task_nothing" selected>----</option> 
+
+            </select>
+          </div>
+
+      </div>
+
+        <div id='focus options2' style='margin-top: 20px;' >
+
+          <div style="position:inline">
+            <label for="open_hashtages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open urls by of hashtag:</label>
+            <select id='open_hashtags_select' style ='position: absolute; width:80px;     box-sizing:border-box;'  >
+              <option id="hashtag_nothing" selected>----</option> 
+            </select>
+          </div>
+         
+          <div  style="position:inline;padding-top:10px">
+
+            <label for="sort_task" style='padding-right: 30px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open urls by of task:</label>
+            <select id='open_task_select' style ='  position: absolute;  width:80px;      box-sizing:border-box; padding-right: 10px;
+            '>
+              <option id="task_nothing" selected>----</option> 
+
+            </select>
+          </div>
+
+      </div>
+
+
+      <div style='display:inline-block;margin-top: 20px;margin-left: 25px;'>
+       
+     
+          
+          
+        <div class="tooltip" style='  display: inline-block;
+          vertical-align: middle;' >
+        
+          <span class="tooltiptext">Enter task name</span>
+
+      
+          <textarea   id='task_name' class='task_name_to_record' style='font-size: 10px;background-color:whitesmoke;'  >Task Name</textarea>
+        
+        </div>
+
+        <button id='recorder' class='record' style='margin-left: 10px;margin-top:10px;
+          vertical-align:top;'>Record</button>
+        
+      
+
+      
+      </div>
+        
+         
+        
+
+
+
+
+      </div>
+  
+  
+</body>
+
+</html>

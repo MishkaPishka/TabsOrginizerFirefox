@@ -1,0 +1,40 @@
+{
+    "description": "Tabs managment tool",
+    "manifest_version": 2,
+    "name": "Tabs Tag Orginizer",
+    "version": "1.0",
+    "icons": {
+      "48": "icons/browserMenuIcon.png"
+    },
+  
+    "permissions": [
+      "notifications","activeTab", "tabs","storage"
+     
+    ],
+    "background": {
+      "scripts": [ "data_manager.js","background.js"]
+    },
+
+
+
+    "content_scripts": [
+      {
+        "matches":["*://*/"],
+        "js": ["content_scripts/browser_popup_script.js"]
+      }
+    ] , "page_action": {
+      "default_icon": "icons/page_close.png",
+      "default_popup": "popup/page_popup/page_popup.html", 
+  
+      "browser_style": true
+    },
+  
+      "browser_action": {
+    
+    
+        "default_title": "Tabs  Orginizer",
+        "default_popup": "popup/browser_popup/browser_popup2.html" 
+      }
+    
+  }
+  
