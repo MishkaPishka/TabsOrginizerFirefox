@@ -6,8 +6,8 @@
 
 onOpen();
 
-var UrlsToIgnoreInRecording = ['about:blank']
-var CloseDupTabParameters = [] 
+let UrlsToIgnoreInRecording = ['about:blank']
+let CloseDupTabParameters = []
 
 
  
@@ -21,8 +21,8 @@ function onOpen() {
 }
 
 function handleClickOnNotification(ntf) {
-  var splits = ntf.split('param1:');
-  if (splits[0] != undefined && CloseDupTabParameters.includes(splits[0])){
+    let splits = ntf.split('param1:');
+  if (Array.isArray(splits) && splits[0] != undefined && CloseDupTabParameters.includes(splits[0])){
     let [IdToRemove,IdToFocus] =  splits[1].split('param2:')
     CloseDupTabParameters = CloseDupTabParameters.filter(s => s !== splits[0]);
     //close tab of id = splits[0]
@@ -58,8 +58,8 @@ function handleUpdated1(tabId, changeInfo, tabInfo) {
         for ( let tab of tabs) { 
 
            if(tabInfo.url === tab.url &&   changeInfo.status === 'complete' && tabInfo.index != tab.index){ //IF a duplicate is found
-   
-              var id = Math.random().toString(36).substring(7);
+
+               let id = Math.random().toString(36).substring(7);
               CloseDupTabParameters.push(id) 
             browser.notifications.create(id+'param1:'+tabId.toString()+'param2:'+tab.id,{
               "type": "basic",
@@ -149,7 +149,7 @@ function goToPlayingTab() {
         let url = message.url
         let hashtag = message.hashtag
 
-        hashtag = setHashtagByUrl(url,hashtag)
+        setHashtagByUrl(url,hashtag)
         
         resolve(true)
       }
@@ -162,7 +162,7 @@ function goToPlayingTab() {
         let value = message.value
         focusOnTabsByValue(type,value)
           .then(val =>{ 
-            if (val.length != 0) {
+            if (Array.isArray(val) && val.length != 0) {
               browser.tabs.update(val[0].id,{active:true})
 
             }
@@ -221,7 +221,7 @@ function goToPlayingTab() {
         //if done - > save and update 
       else if (message.command === "Notify Recorder") {
 
-          let IsClickRecord = message.recorder_state == 'Record'
+          let IsClickRecord = message.recorder_state === 'Record'
           let IsTaskNameEmpty = message.task_name === '' 
           
           if (IsClickRecord && !IsTaskNameEmpty) {
@@ -277,7 +277,7 @@ function goToPlayingTab() {
 
    
       let func;
-      if (type == 'hashtag') {
+      if (type === 'hashtag') {
         func = getUrlsByHashtag
       }
       else {
@@ -289,13 +289,13 @@ function goToPlayingTab() {
       if (urls === undefined) { resolve(true)}
       for (let url of urls) {
         console.log('url opening:',url);
-        
-        var creating = browser.tabs.create({
+
+          let creating = browser.tabs.create({
           url:url,
           index:0
         })
         creating.then((tab)=>{  console.log(`Created new tab: ${tab.id},${tab.url}`)})
-        .catch(err => {console.log('err in open_urls_by',err);
+        .catch(err => {console.log('err in open_urls_by',err); reject(err)
         })
         
       
@@ -319,7 +319,7 @@ function focusOnTabsByValue(type,value) {
     let TabsToFocusOn = []
     //get list of open tabs by type value
     let refrence ;
-    if (type == 'hashtag') {
+    if (type === 'hashtag') {
       refrence = getUrlsByHashtag(value)
     }
     else {
@@ -334,11 +334,12 @@ function focusOnTabsByValue(type,value) {
           TabsToFocusOn.push(item.id) 
         }
        })//FOR EACH
-       resolve(   browser.tabs.move(
+       resolve(
+           browser.tabs.move(
         TabsToFocusOn,              // integer or integer array
         {index: -1}       // object
       ))
   
-       })
+       }).catch((err) => {reject(err)})
       })
 }

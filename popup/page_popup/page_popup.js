@@ -47,8 +47,8 @@ function askForHashtag(url) {
 
 function saveLable() {
   // or the short variant
-  
-  var hashtag = document.getElementById('hashtag_input').value
+
+  let hashtag = document.getElementById('hashtag_input').value
   
   let rq= {command: 'Update Hashtag',hashtag:hashtag,url:currentURL.url}
   browser.runtime.sendMessage(rq)

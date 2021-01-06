@@ -63,7 +63,7 @@ function setRecorderLable(label,currentTask) {
       
       let select = document.getElementById(select_id); 
 
-      for(var i = 0; i <options.length; i++) 
+      for(let i = 0; i <options.length; i++)
       {
         let opt = options[i];
         let el = document.createElement("option");
@@ -92,8 +92,8 @@ function setRecorderLable(label,currentTask) {
 
           
           console.log('load_popup_state, recorder state',res);
-          
-          var recorder_str =recorder_state  ? 'Stop':'Record' // True means recording, False means idle 
+
+          let recorder_str =recorder_state  ? 'Stop':'Record' // True means recording, False means idle
           populateHashtags(hashTagsList)
 
           populateTasks(tasksList)

@@ -2,16 +2,16 @@ console.log('data manager');
 
 currentFocusedTabsTask = ''
 currentFocusedHashtag = ''
-currentTask = ''
+let currentTask = ''
 
-var HASHTAGS = {}
-var TASKS ={}
-var URLS = {}
+let HASHTAGS = {}
+let TASKS ={}
+let URLS = {}
 
 
-var isAlertDup = false 
+let isAlertDup = false
 
-var isRecording = false 
+let isRecording = false
 //  clearAll()
  function initRecording(taskName) {
   return new Promise((resolve,reject)=> {
@@ -48,7 +48,7 @@ var isRecording = false
         currentTask = ''
         resolve(true)
       })
-      .catch((err)=> { console.log(err);resolve(false) })      
+      .catch((err)=> { console.log(err);reject(false) })
 
   }
   )   
@@ -114,7 +114,6 @@ function setHashtagByUrl(url,hashtag) {
   //this also removes previous values from the db 
   addUrlHashtagInDB(url,hashtag)
 
-    return 
 }
 
 function getUrlsByHashtag(hashtag) {
@@ -164,9 +163,9 @@ function storeNote(title, body) {
 //U 
 function dataInitialize() {
   console.log('data manager - initialize');
-  var gettingAllStorageItems = browser.storage.local.get(null);
+    let gettingAllStorageItems = browser.storage.local.get(null);
   gettingAllStorageItems.then((results) => {
-    var noteKeys = Object.keys(results);
+      let noteKeys = Object.keys(results);
     for (let noteKey of noteKeys) {
    
 
@@ -188,10 +187,10 @@ function dataInitialize() {
 /* function to update notes */
 /** Based on firefox tutorial*/
 function updateNote(delNote,newTitle,newBody) {
-    var storingNote = browser.storage.local.set({ [newTitle] : newBody });
+    let storingNote = browser.storage.local.set({ [newTitle] : newBody });
     storingNote.then(() => {
       if(delNote !== newTitle) {
-        var removingNote = browser.storage.local.remove(delNote);
+          let removingNote = browser.storage.local.remove(delNote);
         removingNote.then(() => {
           displayNote(newTitle, newBody);
         }, onError);
@@ -225,15 +224,15 @@ function addUrlHashtagInDB(url,hashtag) {
   let key = {url:url}
   let val = {value:hashtag,type:'hashtag'}
   new Promise((resolve,reject)=> {
-    
-    var removingNote = browser.storage.local.remove(url);
-    removingNote.then(()=>{console.log('removed:key:',url); resolve({key:url,val:val})},err=> { console.log('storage error',err); resolve({key:url,val:val})})
 
+      let removingNote = browser.storage.local.remove(url);
+    removingNote.then(()=>{console.log('removed:key:',url); resolve({key:url,val:val})},err=> { console.log('storage error',err); resolve({key:url,val:val})})
+        .catch((err) => {reject(err)})
   }).then(data=> {
     console.log('added:key:',data);
 
     storeNote(data.key,data.val)
-      .then((val)=> {console.log('storeNote',data.key,data.val);
+      .then(()=> {console.log('storeNote',data.key,data.val);
       })
       .catch((err)=> {console.log('Error in\n Function:','add_url_hashtag_in_db\n','Details:',err);
        })
@@ -243,35 +242,34 @@ function addUrlHashtagInDB(url,hashtag) {
 }
 
 
-function onError(err) {
-  console.log('storage error',err);
-  
-}
-
-function getDBValueByCriteria() {
-  
-  var gettingAllStorageItems = browser.storage.local.get(null);
-  gettingAllStorageItems.then((results) => {
-    var noteKeys = Object.keys(results);
-    let res = [] 
-
-    for (let noteKey of noteKeys) {
-
-      var curValue = results[noteKey];
-      URLS[noteKey] = curValue
-      if (HASHTAGS[curValue] === undefined) {
-        HASHTAGS[curValue] = []
-      }
-      HASHTAGS[curValue].push(noteKey)
-    
-     
-    }
-  }, onError);
-}
+// function onError(err) {
+//   console.log('storage error',err);
+//
+// }
+//
+// function getDBValueByCriteria() {
+//
+//     let gettingAllStorageItems = browser.storage.local.get(null);
+//   gettingAllStorageItems.then((results) => {
+//       let noteKeys = Object.keys(results);
+//     let res = []
+//
+//     for (let noteKey of noteKeys) {
+//
+//         let curValue = results[noteKey];
+//       URLS[noteKey] = curValue
+//       if (HASHTAGS[curValue] === undefined) {
+//         HASHTAGS[curValue] = []
+//       }
+//       HASHTAGS[curValue].push(noteKey)
+//
+//
+//     }
+//   }, onError);
+// }
 
 // ADD PROPER DATA TO HASHTABLE
 function addValueToTables(type,key,value) {
-  let table;
   switch(type) {
     case 'hashtag':
       URLS[key] = value

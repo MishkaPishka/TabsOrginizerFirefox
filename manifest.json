@@ -15,7 +15,11 @@
       "scripts": [ "data_manager.js","background.js"]
     },
 
-
+    "applications": {
+      "gecko": {
+        "id": "Shkapish@mozilla.org"
+      }
+    },
 
     "content_scripts": [
       {
