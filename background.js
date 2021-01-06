@@ -46,10 +46,10 @@ function handleClickOnNotification(ntf) {
 //isDup display notification 
 //if record - adds to recording stack 
 function handleUpdated1(tabId, changeInfo, tabInfo) {
-  if(getIsRecording()&&  changeInfo.status === 'complete' && !UrlsToIgnoreInRecording.includes(changeInfo.url)   ) {
-    console.log('    add_to_current_task(tabInfo.url)    ',tabInfo.url);
-    
-    addToCurrentTask(tabInfo.url)
+
+  if(getIsRecording()&&  changeInfo.status === 'complete' && tabInfo.status === 'complete'  && !UrlsToIgnoreInRecording.includes(tabInfo.url)    ) {
+      console.log('    add_to_current_task(tabInfo.url)    ',tabInfo.url);
+      addToCurrentTask(tabInfo.url)
   }
   if (isAlertDup) { 
     getCurrentWindowTabs()
@@ -64,8 +64,8 @@ function handleUpdated1(tabId, changeInfo, tabInfo) {
             browser.notifications.create(id+'param1:'+tabId.toString()+'param2:'+tab.id,{
               "type": "basic",
               "iconUrl": browser.extension.getURL("icons/page_open.png"),
-              "title":'url is already open',
-              "message": 'click to unite',
+              "title":'Duplicated URL:'+tab.url,
+              "message": 'Click to unite',
               "isClickable":true,
               'contextMessage':JSON.stringify({url:tabInfo.url,id:tabId}),
             
