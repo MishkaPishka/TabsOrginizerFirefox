@@ -1,8 +1,8 @@
 {
-    "description": "Tabs managment tool",
+    "description": "Tabs management tool",
     "manifest_version": 2,
-    "name": "Tabs Tag Orginizer",
-    "version": "1.0",
+    "name": "Tabs Organization Helper",
+    "version": "1.2",
     "icons": {
       "48": "icons/browserMenuIcon.png"
     },
@@ -15,11 +15,6 @@
       "scripts": [ "data_manager.js","background.js"]
     },
 
-    "applications": {
-      "gecko": {
-        "id": "Shkapish@mozilla.org"
-      }
-    },
 
     "content_scripts": [
       {
@@ -36,7 +31,7 @@
       "browser_action": {
     
     
-        "default_title": "Tabs  Orginizer",
+        "default_title": "Tabs  Organizer",
         "default_popup": "popup/browser_popup/browser_popup2.html" 
       }
     
