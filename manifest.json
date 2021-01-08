@@ -22,7 +22,7 @@
         "js": ["content_scripts/browser_popup_script.js"]
       }
     ] , "page_action": {
-      "default_icon": "icons/page_close.png",
+      "default_icon":  "icons/page_close.png",
       "default_popup": "popup/page_popup/page_popup.html", 
   
       "browser_style": true
